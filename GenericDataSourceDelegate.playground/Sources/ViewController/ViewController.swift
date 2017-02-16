@@ -8,30 +8,30 @@ public class ViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
-        self.dataSource = DataSource(delegate: AnyDataSourceDelegate<Model, DataSource>(base: self))
+    
+        self.dataSource = DataSource(delegate: AnyDataSourceDelegate<Model>(self))
     }
     
     required public init?(coder aDecoder: NSCoder) {
     
         super.init(coder: aDecoder)
         
-        self.dataSource = DataSource(delegate: AnyDataSourceDelegate<Model, DataSource>(base: self))
+        self.dataSource = DataSource(delegate: AnyDataSourceDelegate<Model>(self))
     }
-    
+
     public func triggerRequest() {
     
-        self.dataSource?.request(modelWithId: 0)
+        self.dataSource?.request()
     }
 }
 
 extension ViewController: GenericDataSourceDelegate {
   
-    func didFind(results: Results<Model>, in: DataSource) {
+    func didFind(results: Results<Model>) {
         
         if case let Results.success(model) = results {
             
-            print("model: \(model)")
+            print("Here's your model: \(model)")
         }
     }
 }

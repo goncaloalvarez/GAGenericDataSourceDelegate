@@ -3,7 +3,8 @@ import Foundation
 protocol GenericDataSource {
     
     associatedtype ResourceType
-    associatedtype DataSourceType
     
-    var delegate: AnyDataSourceDelegate<ResourceType, DataSourceType> {get set}
+    func request()
+    
+    var delegate: AnyDataSourceDelegate<ResourceType> {get set}
 }
