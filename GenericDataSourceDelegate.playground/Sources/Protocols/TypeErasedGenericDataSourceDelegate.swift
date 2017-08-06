@@ -1,7 +1,7 @@
 import Foundation
 
 //Conforms to the generic protocol
-//Defines the generic type (U) param that serves as the protocol’s associated type
+//Defines the generic type (U) param that represents the protocol’s associated type
 //It is abstract (all functions must be overrided in the subclass)
 //It will never be used directly (ergo private). It must be subclassed, to bind the generic type constraint to our protocol’s associated type.
 
@@ -10,7 +10,7 @@ private class _AnyDataSourceDelegateBase<U>: GenericDataSourceDelegate {
     init() {
         
         guard type(of: self) != _AnyDataSourceDelegateBase.self else {
-            fatalError("_AnyDataSourceDelegateBase<U,T> instances can not be created; create a subclass instance instead")
+            fatalError("_AnyDataSourceDelegateBase<U> instances can not be created; create a subclass instance instead")
         }
         
     }
@@ -25,13 +25,13 @@ private class _AnyDataSourceDelegateBase<U>: GenericDataSourceDelegate {
 
 //Inherits from the abstract class
 //Defines a generic type parameter “Concrete” that itself conforms to the generic protocol
-//Stores an instance of “Concrete” for later usage
+//Stores an instance of “Concrete” received in init for later usage
 //Redirects each Protocol function call to the stored “Concrete”
 
 //It is called a box, because it boxes (holds) a reference to our concrete implementer of the protocol.
 //We inherit the Protocol conformance from the abstract class we are subclassing.
 //We override each function by redirecting it to the Concrete classes’ implementation.
-//This class is the fabric that glues the concrete class’ associated type to the abstract class’  generic type parameter
+//This class is the fabric that glues the concrete class’ generic type param to the abstract class’  associated type
 
 private final class _AnyDataSourceDelegateBox<ConcreteType: GenericDataSourceDelegate>: _AnyDataSourceDelegateBase<ConcreteType.ResourceType> {
     
